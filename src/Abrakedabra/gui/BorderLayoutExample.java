@@ -71,15 +71,6 @@ public class BorderLayoutExample extends JFrame {
             yellowPanel.setBackground(redPanel.getBackground());
             redPanel.setBackground(help);
 
-
-
-
-
-            //inner circle:
-
-
-
-
         });
 
         add(innerPanel, BorderLayout.CENTER);
