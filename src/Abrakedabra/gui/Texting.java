@@ -21,9 +21,18 @@ public class Texting extends JFrame {
 
         JButton button = new JButton("Print");
         button.setSize(140, 70);
+
         button.addActionListener(e -> {
-            int x = Integer.parseInt(textField.getText());
-            new GridPane(x).setVisible(true);
+            try {
+                int x = Integer.parseInt(textField.getText());
+                new GridPane(x).setVisible(true);
+            } catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(null,
+                        "Nedávej tam písmena!!!!",
+                    "poslední varování",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
         });
 
         add(textField);
