@@ -74,7 +74,7 @@ public class VisualDemo extends JFrame {
     private static JLabel makeTile(String title) {
         JLabel lbl = new JLabel(title, SwingConstants.CENTER);
         lbl.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-        lbl.setBackground(Color.white);
+//        lbl.setBackground(Color.white);
         lbl.setOpaque(true);
         lbl.setFont(lbl.getFont().deriveFont(Font.BOLD, 13f));
         return lbl;
