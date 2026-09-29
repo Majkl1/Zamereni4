@@ -39,7 +39,7 @@ public class Keyboarding extends JFrame implements KeyListener{
             case 's': block.setLocation(block.getX(), block.getY()+5); break;
             case 'd': block.setLocation(block.getX()+5, block.getY()); break;
             default:
-                System.out.println("Neznam"); ;break;
+                System.out.println("Neznam"); break;
         }
     }
 
