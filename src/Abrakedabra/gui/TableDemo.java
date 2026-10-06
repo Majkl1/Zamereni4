@@ -27,7 +27,7 @@ public class TableDemo extends JFrame {
 
 
         for (int i = 0; i < 100; i++) {
-            model.addRow(new String[]{"I", "II", "III", "IV", "V"});
+            model.addRow(new String[]{"I", "II", "III", "IV", "V", "VI"});
         }
 
 
