@@ -1,5 +1,6 @@
 package Abrakedabra.test.gui;
 
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -61,12 +62,24 @@ public class Warehouse extends JFrame {
 
         JButton apply = new JButton("Apply");
 
-        limitField = new JTextField();
+        limitField = new JTextField("0");
         limitField.setPreferredSize(new Dimension(50, 20));
 
 
         apply.addActionListener(e ->{
-            apply();
+            String control = limitField.getText();
+            boolean isNumber = true;
+            for (char a : control.toCharArray()){
+                if (!Character.isDigit(a)){
+                    isNumber = false;
+                    break;
+                }
+            }
+            if (isNumber) {
+                apply();
+            } else {
+                JOptionPane.showMessageDialog(null, "Zadej cislo", "Chyba", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
 
