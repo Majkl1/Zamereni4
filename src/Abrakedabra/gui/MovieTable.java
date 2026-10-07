@@ -1,5 +1,7 @@
 package Abrakedabra.gui;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -45,7 +47,6 @@ public class MovieTable extends JFrame {
 
         sortButton.addActionListener(e -> {
 
-
             if (nameButton.isSelected()){
                 data.sort(Comparator.comparing(Record::getName));
             }
@@ -58,12 +59,12 @@ public class MovieTable extends JFrame {
                 data.sort(new Comparator<Record>() {
                     @Override
                     public int compare(Record o1, Record o2) {
-                        return (int) (o1.rating - o2.rating);
+                        return Double.compare(o1.getRating(), o2.getRating());
                     }
                 });
             }
             if (durationButton.isSelected()){
-                data.sort(Comparator.comparing(Record::getDuration));
+                data.sort(Comparator.comparingInt(Record::getDuration));
             }
 
             model.setRowCount(0);
@@ -93,14 +94,14 @@ public class MovieTable extends JFrame {
 
     void loadData(String filePath){
         try {
-            data = Files.lines(Path.of(filePath))
+            data = new ArrayList<>( Files.lines(Path.of(filePath))
                     .map(line -> line.split(";"))
                     .map(parts -> new Record(
                             parts[0],
                             Integer.parseInt(parts[1]),
                             Double.parseDouble(parts[2]),
                             Integer.parseInt(parts[3])
-                            )).toList();
+                            )).toList() );
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -114,8 +115,8 @@ public class MovieTable extends JFrame {
     }
 
     public static void main(String[] args) {
+        FlatDarkLaf.setup();
         MovieTable mainWindow = new MovieTable();
-
         mainWindow.setVisible(true);
     }
 }
