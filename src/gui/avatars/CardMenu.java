@@ -9,6 +9,8 @@ public class CardMenu extends JFrame {
     JPanel lowerMenu;
     JButton next, previous;
 
+    int current = 0;
+
     CardMenu(){
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(500,400);
@@ -28,10 +30,7 @@ public class CardMenu extends JFrame {
         shoeSize.setFont(new Font("MV Boli", Font.BOLD, 18));
 
 //        avatar = MainMenu.personData.get(0).avatar;//zaciname na prvnim
-        avatar = new ImageIcon(MainMenu.personData.get(0).avatar.getImage().getScaledInstance(500,450, Image.SCALE_DEFAULT));
-        fullName.setText("Full name: " + MainMenu.personData.get(0).name + " " + MainMenu.personData.get(0).surname);
-        shoeSize.setText("Shoe size: " + MainMenu.personData.get(0).shoeSize);
-        salary.setText("Salary: " + MainMenu.personData.get(0).salary);
+        showAvatar(0);
 
         fullName.setIcon(avatar);
         fullName.setHorizontalTextPosition(JLabel.CENTER);
@@ -43,6 +42,11 @@ public class CardMenu extends JFrame {
 
         previous = new JButton("Previous");
         next = new JButton("Next");
+
+        // TODO
+        previous.addActionListener(e -> showPrevious());
+        next.addActionListener(e -> showNext());
+
         lowerMenu.add(previous);
         lowerMenu.add(shoeSize);
         lowerMenu.add(salary);
@@ -50,6 +54,21 @@ public class CardMenu extends JFrame {
 
         this.add(lowerMenu, BorderLayout.SOUTH);
         this.pack();
+    }
+
+    private void showNext() {
+        showAvatar(++current);
+    }
+
+    private void showPrevious() {
+        showAvatar(--current);
+    }
+
+    void showAvatar(int index){
+        avatar = new ImageIcon(MainMenu.personData.get(index).avatar.getImage().getScaledInstance(500,450, Image.SCALE_DEFAULT));
+        fullName.setText("Full name: " + MainMenu.personData.get(index).name + " " + MainMenu.personData.get(index).surname);
+        shoeSize.setText("Shoe size: " + MainMenu.personData.get(index).shoeSize);
+        salary.setText("Salary: " + MainMenu.personData.get(index).salary);
     }
 
 }
