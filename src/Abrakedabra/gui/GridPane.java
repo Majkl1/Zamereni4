@@ -2,6 +2,8 @@ package Abrakedabra.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class GridPane extends JFrame {
     final static int DEFAULT_DIM = 10;
@@ -36,6 +38,11 @@ public class GridPane extends JFrame {
     }
 }
 class Piece extends JLabel {
+    final static Color HOVER_COLOR = Color.ORANGE;
+    final static Color PRESSED_COLOR = Color.BLACK;
+
+    boolean isLocked = false;
+
 
     //vlastni label, pamatuje si vsechnu konfiguraci
     public Piece(Color color){
@@ -46,5 +53,39 @@ class Piece extends JLabel {
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         setOpaque(true);
         setBackground(color);
+
+
+        addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setBackground(PRESSED_COLOR);
+                isLocked = true;
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (!isLocked){
+                    setBackground(HOVER_COLOR);
+                }
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (!isLocked){
+                    setBackground(color);
+                }
+            }
+        });
     }
 }
