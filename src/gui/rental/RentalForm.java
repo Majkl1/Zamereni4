@@ -16,7 +16,6 @@ public class RentalForm extends JFrame {
 
 
     public RentalForm() {
-
         setTitle("Ski Rental");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -117,6 +116,7 @@ public class RentalForm extends JFrame {
         int roomNumber = 0;
         //pokusy o parsovani/cteni cisel
         try {
+
             roomNumber = Integer.parseInt(roomField.getText());
             if (roomNumber < 100 || roomNumber > 699) {
                 errors.append("- Room number must be between 100 and 699.\n");
