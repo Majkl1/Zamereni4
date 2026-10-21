@@ -19,10 +19,50 @@ public class Rent {
         return new String[]{
                 customerName,
                 String.valueOf(roomNumber),
-                studentDiscount ? "Yes" : "No",
                 skiType.toString(),
+                studentDiscount ? "Yes" : "No",
                 String.valueOf(rentalDays)
         };
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public boolean isStudentDiscount() {
+        return studentDiscount;
+    }
+
+    public void setStudentDiscount(boolean studentDiscount) {
+        this.studentDiscount = studentDiscount;
+    }
+
+    public SkiType getSkiType() {
+        return skiType;
+    }
+
+    public void setSkiType(SkiType skiType) {
+        this.skiType = skiType;
+    }
+
+    public int getRentalDays() {
+        return rentalDays;
+    }
+
+    public void setRentalDays(int rentalDays) {
+        this.rentalDays = rentalDays;
     }
 }
 

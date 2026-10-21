@@ -14,6 +14,9 @@ public class RentalForm extends JFrame {
     private final ButtonGroup equipmentGroup;
     private final JSlider daysSlider;
 
+    private boolean editMode = false;
+    private Rent reservation;
+
 
     public RentalForm() {
 
@@ -105,6 +108,33 @@ public class RentalForm extends JFrame {
         clearButton.addActionListener(e -> clearForm());
     }
 
+    public RentalForm(Rent reservation){
+        this();
+        editMode = true;
+        this.reservation = reservation;
+
+        nameField.setText(reservation.getCustomerName());
+        roomField.setText(String.valueOf(reservation.getRoomNumber()));
+
+        if (reservation.getSkiType().equals(SkiType.SNOWBOARD)){
+            snowboardButton.setSelected(true);
+        }
+        if (reservation.getSkiType().equals(SkiType.SKI)){
+            skisButton.setSelected(true);
+        }
+        if (reservation.getSkiType().equals(SkiType.CROSSCOUNTRY)){
+            crossCountryButton.setSelected(true);
+        }
+
+        if (reservation.isStudentDiscount()){
+            studentDiscountCheckBox.setSelected(true);
+        }
+
+        daysSlider.setValue(reservation.getRentalDays());
+
+
+    }
+
 
     private void rent() {
         //NE: String += errMsg
@@ -146,24 +176,45 @@ public class RentalForm extends JFrame {
             );
             return; //nastaly chyby, nema cenu pokracovat
         }
-        
+
+        if (editMode){
+            reservation = new Rent(
+                    nameField.getText(),
+                    Integer.parseInt(roomField.getText()),
+                    studentDiscountCheckBox.isSelected(),
+                    getEquipmentType(),
+                    daysSlider.getValue());
+        } else {
+            Rent rent = new Rent(
+                    nameField.getText(),
+                    Integer.parseInt(roomField.getText()),
+                    studentDiscountCheckBox.isSelected(),
+                    getEquipmentType(),
+                    daysSlider.getValue()
+            );
+            DashBoard.rents.add(rent);
+        }
+
         JOptionPane.showMessageDialog(
                 this,
                 "Rental succesfully created",
                 "Rental",
                 JOptionPane.INFORMATION_MESSAGE
         );
+
+        DashBoard.reLoadTable();
+        dispose();
     }
 
 
-    private String getEquipmentType() {
+    private SkiType getEquipmentType() {
         if (snowboardButton.isSelected()) {
-            return "Snowboard";
+            return SkiType.SNOWBOARD;
         }
         if (crossCountryButton.isSelected()) {
-            return "Cross-country skis";
+            return SkiType.CROSSCOUNTRY;
         }
-        return "Skis";
+        return SkiType.SKI;
     }
 
 

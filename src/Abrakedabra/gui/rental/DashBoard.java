@@ -9,7 +9,7 @@ public class DashBoard extends JFrame {
     public static ArrayList<Rent> rents = new ArrayList<>();
 
     private JTable table;
-    private DefaultTableModel model;
+    private static DefaultTableModel model;
 
 
 
@@ -19,6 +19,9 @@ public class DashBoard extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+
+        rents.add(new Rent("Karel", 222, false, SkiType.SKI, 6));
+        rents.add(new Rent("Pepa", 245, true, SkiType.SNOWBOARD, 9));
 
         //North
         JLabel title = new JLabel("Dashboard", SwingConstants.CENTER);
@@ -31,7 +34,7 @@ public class DashBoard extends JFrame {
         table = new JTable(model);
         JScrollPane pane = new JScrollPane(table);
 
-        load();
+        reLoadTable();
 
 
         //South
@@ -41,13 +44,17 @@ public class DashBoard extends JFrame {
         JButton detailButton = new JButton("Detail");
         JButton editButton = new JButton("Edit");
         JButton saveButton = new JButton("Save");
+        JButton deleteButton = new JButton("Delete");
 
         formButton.addActionListener(e -> openForm());
         saveButton.addActionListener(e -> save());
+        editButton.addActionListener(e -> edit(table.getSelectedRow()));
+        deleteButton.addActionListener(e -> delete(table.getSelectedRow()));
 
         buttonPanel.add(formButton);
         buttonPanel.add(detailButton);
         buttonPanel.add(editButton);
+        buttonPanel.add(deleteButton);
         buttonPanel.add(saveButton);
 
         add(title, BorderLayout.NORTH);
@@ -56,22 +63,34 @@ public class DashBoard extends JFrame {
 
     }
 
-    private void load(){
-        rents.add(new Rent("Pepa", 153, true, SkiType.SKI, 4));
-        rents.add(new Rent("Pepa", 153, true, SkiType.SKI, 4));
-        rents.add(new Rent("Pepa", 153, true, SkiType.SKI, 4));
-
+    static void reLoadTable(){
         model.setRowCount(0);
         for (Rent rent : rents){
             model.addRow(rent.returnAsTableRow());
         }
     }
 
+    private void edit(int rowNumber){
+        if (rowNumber < 0){
+            JOptionPane.showMessageDialog(this, "Row isn´t selected", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Rent r = rents.get(rowNumber);
+        RentalForm form = new RentalForm(r);
+        form.setVisible(true);
+    }
+
+    private void delete(int rowNumber){
+        rents.remove(rowNumber);
+        reLoadTable();
+    }
+
     private void save() {
     }
 
     private void openForm() {
-
+        RentalForm form = new RentalForm();
+        form.setVisible(true);
     }
 
     public static void main(String[] args) {
